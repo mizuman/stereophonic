@@ -207,16 +207,19 @@ function init() {
             posList.A.y = e.layerY;
             clear();
             draw();
+            console.log("A : (" + (( posList.A.x / canvasWidth ) - 0.5) * 2 + ',' + (( posList.A.y / canvasHeight ) - 0.7) * 2 + ')');
         } else if (posList.B.flag===true){
             posList.B.x = e.layerX;
             posList.B.y = e.layerY;
             clear();
             draw();
+            console.log("B : (" + (( posList.B.x / canvasWidth ) - 0.5) * 2 + ',' + (( posList.B.y / canvasHeight ) - 0.7) * 2 + ')');
         } else if (posList.C.flag===true){
             posList.C.x = e.layerX;
             posList.C.y = e.layerY;
             clear();
             draw();
+            console.log("C : (" + (( posList.C.x / canvasWidth ) - 0.5) * 2 + ',' + (( posList.C.y / canvasHeight ) - 0.7) * 2 + ')');
         }
 
     }, false);
