@@ -89,7 +89,7 @@ function setTemplatePos(formation){
 
 function init() {
   context = new webkitAudioContext();
-  bufferLoader = new BufferLoader(context,['mp3/raiten_mayu.mp3','mp3/watakbe.mp3','mp3/ichiyo_rour.mp3' ],function(){console.log("finish load.");});
+  bufferLoader = new BufferLoader(context,['mp3/raiten_mayu.mp3','mp3/001-sibutomo.mp3','mp3/ichiyo_rour.mp3' ],function(){console.log("finish load.");});
   bufferLoader.load();
 }
 
@@ -119,7 +119,8 @@ function showValue (rangeNo) {
 }
 
 var playmp3 = function(){
-    var url = ["mp3/raiten_mayu.mp3","mp3/watakbe.mp3","mp3/ichiyo_rour.mp3"];
+    // var url = ["mp3/raiten_mayu.mp3","mp3/001-sibutomo.mp3","mp3/ichiyo_rour.mp3"];
+    var url = ["mp3/translate_tts.mp3","mp3/translate_tts_2.mp3","mp3/translate_tts_3.mp3"];
     // url = ('mp3/raiten_mayu.mp3');
     var bufferLoader = new BufferLoader(context, url, function(bufferList){
         for (var i = 0; i <= bufferList.length; i++) {

@@ -34,6 +34,7 @@
                 <li><a href="#">Contact</a></li>
             </ul>
             <h3 class="muted">立体音響</h3>
+            一カ所から聞こえる時は聞き取りづらい会話も、「散開」ボタンを押し、聞こえる方向を意識すると聞き取りやすくなります
         </div>
         <hr>
 
@@ -41,8 +42,8 @@
 
         <div>
             <button id="play" class="btn">play sound!</button>
-            <button id="scatter" class="btn">scatter</button>
-            <button id="gather" class="btn">gather</button>
+            <button id="scatter" class="btn">散開</button>
+            <button id="gather" class="btn">集合</button>
         </div>
         <div>
             Voice A : <input id="range0" type="range" min="-2" max="2" step="0.01" onchange="showValue(0)"/> 
@@ -58,13 +59,20 @@
             <span id="showRangeArea2">0</span>
         </div>
 
-<!-- 
+<!--         <div>
+            playボタンを押すことで、3人が同時に話し始めます。<br>
+            　- 音声データの取得に時間がかかり、すぐに再生されない場合があります。<br>
+            scatterボタンで、3人が左右中央に散らばります<br>
+            gatherボタンで、3人が中央に集まります。
+        </div> -->
+
+
         <p>
-            <span id="position-sample" style="border: 1px solid black; display: inline-block;">
-                <canvas width="400" height="300"></canvas>
+            <span id="userStage" style="border: 1px solid black; display: inline-block;">
+                <canvas width="600" height="300"></canvas>
             </span>
         </p>
- -->
+
 
         <hr>
         <div class="footer">
