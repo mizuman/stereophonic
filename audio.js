@@ -74,7 +74,6 @@ function setTemplatePos(formation){
             break;
 
     }
-
 }
 
 // var init = function() {
