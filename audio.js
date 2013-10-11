@@ -194,7 +194,7 @@ function init() {
                     posList.C.flag = true;
                 }
             }
-        } 
+        }
 
     }, false);
 
@@ -273,6 +273,7 @@ var playmp3 = function(){
         }
     });
     bufferLoader.load();
+    init();
 };
 
 
