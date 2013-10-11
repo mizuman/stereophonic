@@ -1,12 +1,13 @@
 window.onload = init;
 var context;
 var pannerNode = [];
+var gainNode = [];
 var position = {x:0,y:0,z:0};
 var posList = {
     A:{x:300,y:100,z:0,flag:false},
     B:{x:300,y:100,z:0,flag:false},
     C:{x:300,y:100,z:0,flag:false}
-}
+};
 // var pos
 // var canvas = document.getElementById('userStage');
 // var ctx    = canvas.getContext('2d');
@@ -97,10 +98,10 @@ function setTemplatePos(formation){
 
 function init() {
     context = new webkitAudioContext();
-    bufferLoader = new BufferLoader(context,['mp3/raiten_mayu.mp3','mp3/001-sibutomo.mp3','mp3/ichiyo_rour.mp3' ],function(){console.log("finish load.");});
+    bufferLoader = new BufferLoader(context,['mp3/translate_tts.mp3','mp3/translate_tts_2.mp3','mp3/translate_tts_3.mp3'],function(){console.log("finish load.");});
     bufferLoader.load();
 
-    var canvas = document.getElementById('userStage');    
+    var canvas = document.getElementById('userStage');
     var ctx = canvas.getContext('2d');
 
     // 定数　キャンバスサイズとアイコンサイズ
@@ -256,16 +257,18 @@ var playmp3 = function(){
     var url = ["mp3/translate_tts.mp3","mp3/translate_tts_2.mp3","mp3/translate_tts_3.mp3"];
     // url = ('mp3/raiten_mayu.mp3');
     var bufferLoader = new BufferLoader(context, url, function(bufferList){
-        for (var i = 0; i <= bufferList.length; i++) {
+        for (var i = 0; i < bufferList.length; i++) {
             // console.log('source=' + i + 'src=' + url );
             var source = context.createBufferSource();
             source.buffer = bufferList[i];
             source.loop = true;
 
             pannerNode[i] = context.createPanner();
+            gainNode[i] = context.createGainNode();
             // source.connect(context.destination);
             source.connect(pannerNode[i]);
-            pannerNode[i].connect(context.destination);
+            pannerNode[i].connect(gainNode[i]);
+            gainNode[i].connect(context.destination);
             source.noteOn(0);
         }
     });
