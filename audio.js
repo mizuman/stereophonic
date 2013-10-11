@@ -161,7 +161,20 @@ function init() {
     setPosListGather(posList);
     draw();
 
-    canvas.addEventListener('click',function(e){
+    canvas.addEventListener('mouseup',function(e){
+        e.target.getBoundingClientRect();
+        mouseX = e.layerX;
+        mouseY = e.layerY;
+
+        if( posList.A.flag===true || posList.B.flag===true || posList.C.flag===true ){
+            posList.A.flag=false;
+            posList.B.flag=false;
+            posList.C.flag=false;
+        }
+
+    }, false);
+
+    canvas.addEventListener('mousedown',function(e){
         e.target.getBoundingClientRect();
 
         mouseX = e.layerX;
@@ -169,11 +182,7 @@ function init() {
         // console.log("x,y = (" + mouseX + "," + mouseY + ")");
         // console.log(posList.A.x + ' : ' + posList.A.flag);
 
-        if( posList.A.flag===true || posList.B.flag===true || posList.C.flag===true ){
-            posList.A.flag=false;
-            posList.B.flag=false;
-            posList.C.flag=false;
-        } else if ( posList.A.x - iconWidth/2 < mouseX && mouseX < posList.A.x + iconWidth/2){
+        if ( posList.A.x - iconWidth/2 < mouseX && mouseX < posList.A.x + iconWidth/2){
             if( posList.A.y - iconHeight/2 < mouseY && mouseY < posList.A.y + iconHeight/2){
                 if( posList.A.flag === false) {
                     console.log("touch A");
