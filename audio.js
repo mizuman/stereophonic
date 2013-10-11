@@ -65,6 +65,16 @@ function setPosition(nodeNo){
         console.log('---mute---');
         gainNode[nodeNo].gain.value = 0;
     }
+    if( position.y < - 0.5 ){
+        gainNode[nodeNo].gain.value *= Math.cos(position.y *Math.PI);
+    }
+    if( position.x < - 0.3 ){
+        gainNode[nodeNo].gain.value *= Math.cos(position.x *Math.PI);
+    }
+    if( position.x > 0.3 ){
+        gainNode[nodeNo].gain.value *= Math.cos(position.x *Math.PI);
+    }
+
     // console.log("setPosition position=" + position.x, position.y);
 
 }
@@ -85,9 +95,9 @@ function setTemplatePos(formation){
             };
             init();
             // console.log("setTemplateScatter position=" + position.x, position.y);
-            console.log("setTemp scatter");
-            console.log(posList);
-            console.log(position);
+            // console.log("setTemp scatter");
+            // console.log(posList);
+            // console.log(position);
             break;
 
         case 'gather':
@@ -211,21 +221,21 @@ function init() {
         if ( posList.A.x - iconWidth/2 < mouseX && mouseX < posList.A.x + iconWidth/2){
             if( posList.A.y - iconHeight/2 < mouseY && mouseY < posList.A.y + iconHeight/2){
                 if( posList.A.flag === false) {
-                    console.log("touch A");
+                    // console.log("touch A");
                     posList.A.flag = true;
                 }
             }
         } else if ( posList.B.x - iconWidth/2 < mouseX && mouseX < posList.B.x + iconWidth/2){
             if( posList.B.y - iconHeight/2 < mouseY && mouseY < posList.B.y + iconHeight/2){
                 if( posList.B.flag === false) {
-                    console.log("touch B");
+                    // console.log("touch B");
                     posList.B.flag = true;
                 }
             }
         } else if ( posList.C.x - iconWidth/2 < mouseX && mouseX < posList.C.x + iconWidth/2){
             if( posList.C.y - iconHeight/2 < mouseY && mouseY < posList.C.y + iconHeight/2){
                 if( posList.C.flag === false) {
-                    console.log("touch C");
+                    // console.log("touch C");
                     posList.C.flag = true;
                 }
             }
