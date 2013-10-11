@@ -2,7 +2,7 @@ window.onload = init;
 var context;
 var pannerNode = [];
 var gainNode = [];
-var position = {x:0,y:0,z:0};
+var position = {x:0,y:0.7,z:0};
 var posList = {
     A:{x:300,y:100,z:0,flag:false},
     B:{x:300,y:100,z:0,flag:false},
@@ -60,17 +60,34 @@ function setPosition(nodeNo){
     pannerNode[nodeNo].setPosition(position.x,
                   position.y,
                   position.z);
+    gainNode[nodeNo].gain.value = ( Math.cos(position.x * 0.5*Math.PI) + Math.cos(position.y * 0.5*Math.PI) ) * 0.5;
+    if(position.x>0.3 && position.y>0.15) {
+        console.log('---mute---');
+        gainNode[nodeNo].gain.value = 0;
+    }
+    // console.log("setPosition position=" + position.x, position.y);
+
 }
 
 function setTemplatePos(formation){
     switch (formation) {
         case 'scatter':
-            document.getElementById("range0").value = 2;
+            document.getElementById("range0").value = -0.2;
             showValue(0);
             document.getElementById("range1").value = 0;
             showValue(1);
-            document.getElementById("range2").value = -2;
+            document.getElementById("range2").value = 0.2;
             showValue(2);
+            posList = {
+                A:{x:180,y:200,z:0,flag:false},
+                B:{x:300,y:100,z:0,flag:false},
+                C:{x:420,y:200,z:0,flag:false}
+            };
+            init();
+            // console.log("setTemplateScatter position=" + position.x, position.y);
+            console.log("setTemp scatter");
+            console.log(posList);
+            console.log(position);
             break;
 
         case 'gather':
@@ -80,6 +97,13 @@ function setTemplatePos(formation){
             showValue(1);
             document.getElementById("range2").value = 0;
             showValue(2);
+            posList = {
+                A:{x:300,y:100,z:0,flag:false},
+                B:{x:300,y:100,z:0,flag:false},
+                C:{x:300,y:100,z:0,flag:false}
+            };
+            init();
+            // console.log("setTemplateScatter position=" + position.x, position.y);
             break;
 
     }
@@ -109,8 +133,8 @@ function init() {
     var canvasHeight = canvas.height;
     var iconWidth = 50;
     var iconHeight = 50;
-    var baseWidth = canvasWidth/2;
-    var baseHeight = canvasHeight*2/3;
+    var baseWidth = canvasWidth*0.5;
+    var baseHeight = canvasHeight*0.7;
 
     var img = new Image();
     var imgA = new Image();
@@ -121,44 +145,44 @@ function init() {
     imgB.src = "image/iconB.png";
     imgC.src = "image/iconC.png";
 
-    function setPosListGather(posList){
-        posList = {
-            A:{x:canvasWidth/2,y:canvasHeight/3,z:0,flag:false},
-            B:{x:canvasWidth/2,y:canvasHeight/3,z:0,flag:false},
-            C:{x:canvasWidth/2,y:canvasHeight/3,z:0,flag:false}
-        };
-    }
+    // function setPosListGather(posList){
+    //     posList = {
+    //         A:{x:canvasWidth/2,y:canvasHeight*0.3,z:0,flag:false},
+    //         B:{x:canvasWidth/2,y:canvasHeight*0.3,z:0,flag:false},
+    //         C:{x:canvasWidth/2,y:canvasHeight*0.3,z:0,flag:false}
+    //     };
+    //     clear();
+    //     draw();
+    // }
 
-    function setPosListScatter(posList){
-        posList = {
-            A:{x:iconWidth/2,y:canvasHeight/3,z:0,flag:false},
-            B:{x:canvasWidth/2,y:canvasHeight/3,z:0,flag:false},
-            C:{x:canvasWidth-iconWidth/2,y:canvasHeight/3,z:0,flag:false}
-        };
-    }
-
-
-    // setPosListGather(posList);
-    // ctx.drawImage(img,baseWidth-iconWidth/2,baseHeight-iconHeight/2,iconWidth,iconHeight);
-    // ctx.drawImage(imgC,posList.C.x-iconWidth/2,posList.C.y-iconHeight/2,iconWidth,iconHeight);
-    // ctx.drawImage(imgB,posList.B.x-iconWidth/2,posList.B.y-iconHeight/2,iconWidth,iconHeight);
-    // ctx.drawImage(imgA,posList.A.x-iconWidth/2,posList.A.y-iconHeight/2,iconWidth,iconHeight);
+    // function setPosListScatter(posList){
+    //     posList = {
+    //         A:{x:canvasWidth/2 - 100 - iconWidth/2,   y:canvasHeight*0.7,z:0,flag:false},
+    //         B:{x:canvasWidth/2,                       y:canvasHeight*0.3,z:0,flag:false},
+    //         C:{x:canvasWidth/2 + 100 - iconWidth/2,   y:canvasHeight*0.7,z:0,flag:false}
+    //     };
+    //     clear();
+    //     draw();
+    // }
 
     function draw(){
         ctx.drawImage(img,baseWidth-iconWidth/2,baseHeight-iconHeight/2,iconWidth,iconHeight);
         ctx.drawImage(imgC,posList.C.x-iconWidth/2,posList.C.y-iconHeight/2,iconWidth,iconHeight);
         ctx.drawImage(imgB,posList.B.x-iconWidth/2,posList.B.y-iconHeight/2,iconWidth,iconHeight);
         ctx.drawImage(imgA,posList.A.x-iconWidth/2,posList.A.y-iconHeight/2,iconWidth,iconHeight);
-    }
-    function clear(){
-        ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-        // ctx.drawImage(img,baseWidth-iconWidth/2,baseHeight-iconHeight/2,iconWidth,iconHeight);
-        // ctx.drawImage(imgC,posList.C.x-iconWidth/2,posList.C.y-iconHeight/2,iconWidth,iconHeight);
-        // ctx.drawImage(imgB,posList.B.x-iconWidth/2,posList.B.y-iconHeight/2,iconWidth,iconHeight);
-        // ctx.drawImage(imgA,posList.A.x-iconWidth/2,posList.A.y-iconHeight/2,iconWidth,iconHeight);
+        ctx.font = "18px 'ＭＳ Ｐゴシック'";
+        ctx.strokeText("mute", 500,280);
+
+        // console.log("draw position=" + position.x, position.y);
+        // console.log("draw posList=" + posList.A.x, posList.A.y);
     }
 
-    setPosListGather(posList);
+    function clear(){
+        ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+    }
+
+    // setPosListGather(posList);
+    clear();
     draw();
 
     canvas.addEventListener('mouseup',function(e){
@@ -170,6 +194,8 @@ function init() {
             posList.A.flag=false;
             posList.B.flag=false;
             posList.C.flag=false;
+            // console.log(position);
+            // console.log(posList);
         }
 
     }, false);
@@ -207,8 +233,6 @@ function init() {
 
     }, false);
 
-    
-
     canvas.addEventListener('mousemove',function(e){
         e.target.getBoundingClientRect();
 
@@ -217,19 +241,30 @@ function init() {
             posList.A.y = e.layerY;
             clear();
             draw();
-            console.log("A : (" + (( posList.A.x / canvasWidth ) - 0.5) * 2 + ',' + (( posList.A.y / canvasHeight ) - 0.7) * 2 + ')');
+
+            position.x = (( posList.A.x / canvasWidth ) - 0.5);
+            position.y = (( posList.A.y / canvasHeight ) - 0.7);
+            setPosition(0);
+            // console.log(position.x, position.y);
+
         } else if (posList.B.flag===true){
             posList.B.x = e.layerX;
             posList.B.y = e.layerY;
             clear();
             draw();
-            console.log("B : (" + (( posList.B.x / canvasWidth ) - 0.5) * 2 + ',' + (( posList.B.y / canvasHeight ) - 0.7) * 2 + ')');
+
+            position.x = (( posList.B.x / canvasWidth ) - 0.5);
+            position.y = (( posList.B.y / canvasHeight ) - 0.7);
+            setPosition(1);
         } else if (posList.C.flag===true){
             posList.C.x = e.layerX;
             posList.C.y = e.layerY;
             clear();
             draw();
-            console.log("C : (" + (( posList.C.x / canvasWidth ) - 0.5) * 2 + ',' + (( posList.C.y / canvasHeight ) - 0.7) * 2 + ')');
+
+            position.x = (( posList.C.x / canvasWidth ) - 0.5);
+            position.y = (( posList.C.y / canvasHeight ) - 0.7);
+            setPosition(2);
         }
 
     }, false);
